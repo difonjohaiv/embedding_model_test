@@ -46,7 +46,7 @@ def random_samples(sample_nums):
     """
     label_dict = {0: [], 1: [], 2: [], 3: [], 4: [], 5: []}
 
-    with open('data/Chinese-STS-B/sts-b-test.txt', 'r') as f:
+    with open('data/Chinese-STS-B/sts-b-test.txt', 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -55,7 +55,7 @@ def random_samples(sample_nums):
             label = int(items[-1])
             label_dict[label].append(line)
 
-    with open('data/sampled_data.txt', 'w') as f:
+    with open('data/sampled_data.txt', 'w', encoding='utf-8') as f:
         for label in label_dict:
             samples = random.sample(label_dict[label], sample_nums)
             for sample in samples:
