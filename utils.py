@@ -1,5 +1,6 @@
 import torch
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from torch.nn import CosineSimilarity
 
 EMBEDDING_DEVICE = "cuda" if torch.cuda.is_available(
 ) else "mps" if torch.backends.mps.is_available() else "cpu"
@@ -18,3 +19,8 @@ def get_embedding(model_name="text2vec-base"):
         model_name=embedding_model_dict[model_name], model_kwargs=model_kwargs)
 
     return embedding
+
+
+def get_simfunc():
+    simfunc = CosineSimilarity(dim=0, eps=1e-6)
+    return simfunc
