@@ -30,6 +30,8 @@ import torch.cuda
 import torch.backends
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity
+from tqdm import tqdm
+
 
 embedding_model_dict = {
     "ernie-base": "models/ernie-3.0-base-zh",
@@ -91,7 +93,7 @@ def model_test(embedding_model, sample_nums):
     print("加载数据进行预测y......")
     result_all = ""
     with open('data/sampled_data.txt', 'r', encoding='utf-8') as f:
-        for line in f:
+        for line in tqdm(f):
             line = line.strip()
             # print(line)
             if not line:
@@ -142,10 +144,10 @@ if __name__ == '__main__':
     sample_nums = 90
     random_samples(sample_nums)
     # 全部模型运行测试
-    for embedding_model in embedding_model_dict:
-        print("正在使用 【{}】 模型测试中。。。。。。".format(embedding_model))
-        model_test(embedding_model, sample_nums)
+    # for embedding_model in embedding_model_dict:
+    #     print("正在使用 【{}】 模型测试中。。。。。。".format(embedding_model))
+    #     model_test(embedding_model, sample_nums)
 
     # 单独模型运行测试
-    # embedding_model= "sentence-transformers-v2"
-    # model_test(embedding_model, sample_nums)
+    embedding_model = "text2vec-large"
+    model_test(embedding_model, sample_nums)
