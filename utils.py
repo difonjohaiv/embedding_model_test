@@ -14,6 +14,7 @@ embedding_model_dict = {
 }
 
 
+# 获取嵌入模型
 def get_embedding(model_name="text2vec-base"):
     embedding = HuggingFaceEmbeddings(
         model_name=embedding_model_dict[model_name], model_kwargs=model_kwargs)
@@ -21,6 +22,7 @@ def get_embedding(model_name="text2vec-base"):
     return embedding
 
 
+# 获取余弦相似度函数，torch.nn
 def get_simfunc():
     simfunc = CosineSimilarity(dim=0, eps=1e-6)
     return simfunc
