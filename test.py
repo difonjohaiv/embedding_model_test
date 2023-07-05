@@ -90,7 +90,7 @@ def model_test(embedding_model, sample_nums):
     # 加载数据进行预测y
     print("加载数据进行预测y......")
     result_all = ""
-    with open('data/sampled_data.txt', 'r') as f:
+    with open('data/sampled_data.txt', 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             # print(line)
@@ -113,7 +113,7 @@ def model_test(embedding_model, sample_nums):
 
     # 保存预测值记录
     file_path_r = 'result/txt/' + embedding_model + '_result.txt'
-    with open(file_path_r, 'w') as f:
+    with open(file_path_r, 'w', encoding='utf-8') as f:
         f.write(result_all)
 
     print("画图中......")
