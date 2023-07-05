@@ -35,6 +35,7 @@ from tqdm import tqdm
 
 embedding_model_dict = {
     "ernie-base": "models/ernie-3.0-base-zh",
+    "ernie-xbase": "models/ernie-3.0-xbase-zh",
     "text2vec-base": "models/text2vec-base-chinese",
     "text2vec-large": "models/text2vec-large-chinese"
 }
@@ -149,5 +150,5 @@ if __name__ == '__main__':
     #     model_test(embedding_model, sample_nums)
 
     # 单独模型运行测试
-    embedding_model = "text2vec-large"
+    embedding_model = "ernie-xbase"
     model_test(embedding_model, sample_nums)
