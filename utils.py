@@ -18,7 +18,6 @@ embedding_model_dict = {
 def get_embedding(model_name="text2vec-base"):
     embedding = HuggingFaceEmbeddings(
         model_name=embedding_model_dict[model_name], model_kwargs=model_kwargs)
-
     return embedding
 
 
