@@ -2,9 +2,10 @@ from utils import get_embedding
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
 from tqdm import tqdm
-import pandas as pd
+# import pandas as pd
 import pickle
 import numpy as np
+import csv
 
 
 # 分割成10个kw
@@ -38,22 +39,20 @@ def embed_corpus(kws):
 
 
 def build_view(save_path, kw_embedding_list):
-    kw_df = pd.DataFrame(columns=['start', 'end', 'scores'])
-    for i in tqdm(range(len(kw_embedding_list))):
-        for j in range(len(kw_embedding_list)):
-            news_01 = kw_embedding_list[i]
-            news_02 = kw_embedding_list[j]
-            score = cosine_similarity(news_01, news_02)
-            sum = np.sum(score[score > 0.6])
-            if sum >= 1.8:
-                # print(f"新闻{i}新闻{j}相似,起码有3个关键词相似")
-                new_row_data = {'start': i, 'end': j, 'scores': sum}
-                new_row = pd.DataFrame(new_row_data, index=[0])
-                kw_df = pd.concat([kw_df, new_row], ignore_index=True)
-            else:
-                continue
-            #     print(f"新闻{i}新闻{j}不相似,Nono!!!!!")
-    kw_df.to_csv(save_path, sep=" ", header=False, index=False)
+    with open(save_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        # 写入表头
+        writer.writerow(['Row', 'Column', 'Value'])
+        for i in tqdm(range(len(kw_embedding_list))):
+            for j in range(len(kw_embedding_list)):
+                news_01 = kw_embedding_list[i]
+                news_02 = kw_embedding_list[j]
+                score = cosine_similarity(news_01, news_02)
+                sum = np.sum(score[score > 0.6])
+                if sum >= 1.8:
+                    writer.writerow([i, j, sum])
+                else:
+                    continue
 
 
 if __name__ == '__main__':
