@@ -58,6 +58,6 @@ def build_view(save_path, kw_embedding_list):
 
 if __name__ == '__main__':
     save_path = "thucnews/views/keyword_views.csv"
-    with open("thucnew/views/pkl/keyword_embeddings.pickle", "rb") as file:
+    with open("thucnews/views/pkl/keyword_embeddings.pickle", "rb") as file:
         kw_embedding_list = pickle.load(file=file)
     build_view(save_path=save_path, kw_embedding_list=kw_embedding_list)
