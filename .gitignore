@@ -3,6 +3,5 @@ result/*
 result/txt/*
 result/jpg/*
 thucnews/views/title_views.csv
-thucnews/views/pkl/keyword_embeddings.pickle
 thucnews/views/keyword_views.csv
 thucnews/views/thucnews_title.csv
