@@ -38,7 +38,7 @@ def embed_corpus(kws):
         print(len(kw_embedding_list))
 
 
-def build_view(save_path, kw_embedding_list):
+def build_view(save_path, kw_embedding_list, threshold, num):
     with open(save_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         # 写入表头
@@ -48,15 +48,17 @@ def build_view(save_path, kw_embedding_list):
                 news_01 = kw_embedding_list[i]
                 news_02 = kw_embedding_list[j]
                 score = cosine_similarity(news_01, news_02)
-                sum = np.sum(score[score > 0.7])
-                if sum >= 4.9:
+                sum = np.sum(score[score >= threshold])
+                if sum >= (threshold * num):
                     writer.writerow([i, j, sum])
                 else:
                     continue
 
 
 if __name__ == '__main__':
-    save_path = "thucnews/views/keyword_views.csv"
+    threshold = 0.7
+    num = 7
+    save_path = f"thucnews/views/keyword_views_{threshold}_{num}.csv"
     with open("thucnews/views/pkl/keyword_embeddings.pickle", "rb") as file:
         kw_embedding_list = pickle.load(file=file)
-    build_view(save_path=save_path, kw_embedding_list=kw_embedding_list)
+    build_view(save_path=save_path, kw_embedding_list=kw_embedding_list, threshold=threshold, num=num)
