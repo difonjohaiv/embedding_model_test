@@ -48,8 +48,8 @@ def build_view(save_path, kw_embedding_list):
                 news_01 = kw_embedding_list[i]
                 news_02 = kw_embedding_list[j]
                 score = cosine_similarity(news_01, news_02)
-                sum = np.sum(score[score > 0.6])
-                if sum >= 3.0:
+                sum = np.sum(score[score > 0.7])
+                if sum >= 3.5:
                     writer.writerow([i, j, sum])
                 else:
                     continue
