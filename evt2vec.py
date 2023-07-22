@@ -24,7 +24,7 @@ def build_view(save_path, kw_embedding_list, threshold, num):
 
 if __name__ == '__main__':
     threshold = 0.5
-    num = 5
+    num = 2
     save_path = f"thucnews/views/event_views_{threshold}_{num}.csv"
     with open("thucnews/views/pkl/event_embeddings.pickle", "rb") as file:
         kw_embedding_list = pickle.load(file=file)
