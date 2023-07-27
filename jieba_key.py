@@ -26,5 +26,5 @@ def extract_kw_jieba(k):
 if __name__ == '__main__':
     indexs = [1, 2, 3, 4, 5, 6]
     for i in indexs:
-        extract_kw_jieba(i)
         print(f"正在处理第 {i} 个文件ing")
+        extract_kw_jieba(i)
