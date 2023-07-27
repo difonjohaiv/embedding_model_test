@@ -7,6 +7,7 @@ from tqdm import tqdm
 def extract_kw_jieba(k):
     fn = f"thucnews/all_news/news_train_{k}_entity.csv"
     save = f"thucnews/all_news/news_train_{k}_entity_keyword.csv"
+    print(f"正在处理第 {k} 个文件ing")
     df = pd.read_csv(fn)
     df['keyword'] = None
     for i in tqdm(range(len(df))):
@@ -26,5 +27,4 @@ def extract_kw_jieba(k):
 if __name__ == '__main__':
     indexs = [1, 2, 3, 4, 5, 6]
     for i in indexs:
-        print(f"正在处理第 {i} 个文件ing")
         extract_kw_jieba(i)
