@@ -6,3 +6,4 @@ thucnews/views/title_views.csv
 thucnews/views/keyword_views.csv
 thucnews/views/thucnews_title.csv
 thucnews/t2v_large/pkl/event_embeddings_large.pickle
+thucnews/t2v_large/pkl/keyword_embeddings_large.pickle
