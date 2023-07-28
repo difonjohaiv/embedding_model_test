@@ -28,7 +28,7 @@ if __name__ == '__main__':
     threshold = 0.6
     num_list = [2, 3, 5, 7]
     for num in num_list:
-        save_path = f"thucnews/t2v_large/event_views_{threshold}_{num}_large.csv"
+        save_path = f"thucnews/t2v_large/event_views_{threshold}_{num}_ev_large.csv"
         with open("thucnews/t2v_large/pkl/event_embeddings_large.pickle", "rb") as file:
             kw_embedding_list = pickle.load(file=file)
         build_view(save_path=save_path, kw_embedding_list=kw_embedding_list, threshold=threshold, num=num)

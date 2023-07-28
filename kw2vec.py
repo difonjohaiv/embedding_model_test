@@ -25,14 +25,18 @@ def build_view(save_path, kw_embedding_list, threshold, num):
 
 
 if __name__ == '__main__':
-    threshold = 0.6
-    num_list = [3, 5, 7]
+    threshold = 0.7
+    num_list = [1, 2, 3, 5, 7]
     for num in num_list:
-        save_path = f"thucnews/views/keyword_views_{threshold}_{num}.csv"
+        save_path = f"thucnews/views/keyword_views_{threshold}_{num}_kw_large.csv"
         print(save_path)
-        with open("thucnews/views/pkl/keyword_embeddings.pickle", "rb") as file:
+        with open("thucnews/views/pkl/keyword_embeddings.pickle",
+                  "rb") as file:
             kw_embedding_list = pickle.load(file=file)
-        build_view(save_path=save_path, kw_embedding_list=kw_embedding_list, threshold=threshold, num=num)
+        build_view(save_path=save_path,
+                   kw_embedding_list=kw_embedding_list,
+                   threshold=threshold,
+                   num=num)
         print("正在清理文件ing")
         df = pd.read_csv(save_path)
         df.to_csv(save_path, sep=' ', index=False, header=False)
