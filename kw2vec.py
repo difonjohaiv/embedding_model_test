@@ -7,6 +7,7 @@ import csv
 
 
 def build_view(save_path, kw_embedding_list, threshold, num):
+    print("正在构建图ing")
     with open(save_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         # 写入表头
