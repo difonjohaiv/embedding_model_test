@@ -25,12 +25,12 @@ def build_view(save_path, kw_embedding_list, threshold, num):
 
 
 if __name__ == '__main__':
-    threshold = 0.7
-    num_list = [1, 2, 3, 5, 7]
+    threshold = 0.6
+    num_list = [3, 5, 7]
     for num in num_list:
-        save_path = f"thucnews/views/keyword_views_{threshold}_{num}_kw_large.csv"
+        save_path = f"thucnews/t2v_large/keyword_views_{threshold}_{num}_kw_large.csv"
         print(save_path)
-        with open("thucnews/views/pkl/keyword_embeddings.pickle",
+        with open("thucnews/t2v_large/pkl/keyword_embeddings_large.pickle",
                   "rb") as file:
             kw_embedding_list = pickle.load(file=file)
         build_view(save_path=save_path,
