@@ -15,7 +15,7 @@ embedding_model_dict = {
 
 
 # 获取嵌入模型
-def get_embedding(model_name="text2vec-base"):
+def get_embedding(model_name="text2vec-large"):
     embedding = HuggingFaceEmbeddings(
         model_name=embedding_model_dict[model_name], model_kwargs=model_kwargs)
     print("获取的嵌入模型是:", model_name)
