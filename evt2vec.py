@@ -25,7 +25,7 @@ def build_view(save_path, kw_embedding_list, threshold, num):
 
 
 if __name__ == '__main__':
-    threshold = 0.6
+    threshold = 0.65
     num_list = [2, 3, 5, 7]
     for num in num_list:
         save_path = f"thucnews/t2v_large/event_views_{threshold}_{num}_ev_large.csv"
