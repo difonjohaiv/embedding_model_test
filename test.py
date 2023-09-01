@@ -34,8 +34,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 embedding_model_dict = {
     # "ernie-base": "models/ernie-3.0-base-zh",
-    "text2vec-base": "models/text2vec-base-chinese",
-    "text2vec-large": "models/text2vec-large-chinese",
+    "text2vec-base": "models/text2vec-base-chinese"
+    # "text2vec-large": "models/text2vec-large-chinese",
     # "sentence-transformers-v2": "models/sentence-transformers-v2"
 }
 
