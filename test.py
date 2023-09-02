@@ -25,19 +25,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+from tqdm import tqdm
 import random
 import torch.cuda
 import torch.backends
+from sklearn.preprocessing import MinMaxScaler
 # import os
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity
 
 embedding_model_dict = {
     # "ernie-base": "models/ernie-3.0-base-zh",
-    "text2vec-base": "models/text2vec-base-chinese",
     "bge-large": "models/bge-large-zh",
-    "m3e-base": "models/m3e-base"
-    # "text2vec-large": "models/text2vec-large-chinese",
+    "m3e-base": "models/m3e-base",
+    "text2vec-base": "models/text2vec-base-chinese",
+    "text2vec-large": "models/text2vec-large-chinese"
     # "sentence-transformers-v2": "models/sentence-transformers-v2"
 }
 
@@ -50,7 +52,7 @@ def random_samples(sample_nums):
     """
     label_dict = {0: [], 1: [], 2: [], 3: [], 4: [], 5: []}
 
-    with open('data/Chinese-STS-B/sts-b-test.txt', 'r', encoding='utf-8') as f:
+    with open('data/Chinese-STS-B/sts-b-train.txt', 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -76,9 +78,15 @@ def get_x_linspace_y(label_dict, sample_nums):
         x_nums = len(label_dict[l])
         xx = np.linspace(l, l + 1, x_nums)
         x_list += xx.tolist()
-    x = np.array(x_list)
+
+    # 将 x_list 归一化到 [0, 1] 区间
+    x_array = np.array(x_list).reshape(-1, 1)
+    scaler = MinMaxScaler()
+    x_normalized = scaler.fit_transform(x_array)
+
+    # x = np.array(x_list)
     y = np.array(y_list)
-    return x, y
+    return x_normalized, y
 
 
 def model_test(embedding_model, sample_nums):
@@ -95,7 +103,7 @@ def model_test(embedding_model, sample_nums):
     print("加载数据进行预测y......")
     result_all = ""
     with open('data/sampled_data.txt', 'r', encoding='utf-8') as f:
-        for line in f:
+        for line in tqdm(f):
             line = line.strip()
             # print(line)
             if not line:
@@ -133,23 +141,55 @@ def model_test(embedding_model, sample_nums):
     plt.scatter(x, y)
     plt.title("使用向量模型:  " + embedding_model, fontproperties=zhfont1)
     plt.ylabel("余弦相似度", fontproperties=zhfont1)
-    plt.xlabel("样本标签区间（若标签为0，对应[0，1]区间，标签数值越大，两句子相关度越高）",
+    plt.xlabel("样本标签区间(人工为数据标注的真实相似度分数,由[0-5]归一化到[0-1])",
                fontproperties=zhfont1)
     # plt.show()
     # 保存成文件
     plt.savefig('result/jpg/' + embedding_model + '_result.jpg')
     print("完成测试")
+    return x, y
 
 
 if __name__ == '__main__':
     # 抽样数量
-    sample_nums = 90
+    sample_nums = 200
     random_samples(sample_nums)
-    # 全部模型运行测试
-    for embedding_model in embedding_model_dict:
-        print("正在使用 【{}】 模型测试中。。。。。。".format(embedding_model))
-        model_test(embedding_model, sample_nums)
 
+    # 创建一个画布
+    plt.figure(figsize=(80, 40))
+    # fname 为 你下载的字体库路径，注意 SourceHanSansSC-Bold.otf 字体的路径
+    zhfont1 = matplotlib.font_manager.FontProperties(
+        fname="font/SourceHanSansSC-Bold.otf")
+
+    all_x = []
+    all_y = []
+    all_model = []
+
+    # 全部模型运行测试
+    for i, embedding_model in enumerate(embedding_model_dict):
+        print("正在使用 【{}】 模型测试中。。。。。。".format(embedding_model))
+        # 执行模型测试
+        x, y = model_test(embedding_model, sample_nums)
+        # 保存每个模型的结果
+        all_x.append(x)
+        all_y.append(y)
+        all_model.append(embedding_model)
+
+    # 绘制每个模型的结果，每个模型以不同颜色绘制
+    for i, (x, y, embedding_model) in enumerate(zip(all_x, all_y, all_model)):
+        plt.scatter(x, y, label=embedding_model)
+
+    # 添加图例
+    plt.legend()
+
+    # 添加标题和轴标签
+    plt.title("不同模型的余弦相似度比较", fontproperties=zhfont1)
+    plt.ylabel("余弦相似度", fontproperties=zhfont1)
+    plt.xlabel("样本标签区间(人工为数据标注的真实相似度分数,由[0-5]归一化到[0-1])",
+               fontproperties=zhfont1)
+
+    # 保存整个图
+    plt.savefig('result/jpg/all_results.jpg')
     # 单独模型运行测试
     # embedding_model= "sentence-transformers-v2"
     # model_test(embedding_model, sample_nums)
