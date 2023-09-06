@@ -8,3 +8,4 @@ thucnews/views/thucnews_title.csv
 thucnews/t2v_large/pkl/event_embeddings_large.pickle
 thucnews/t2v_large/pkl/keyword_embeddings_large.pickle
 thucnews/m3e_base/pkl/title_embeddings_m3e_base.pickle
+thucnews/bge_large/*
