@@ -8,18 +8,18 @@ from tqdm import tqdm
 fn = "thucnews/thucnews.csv"
 df = pd.read_csv(fn)
 
-embedding = get_embedding()
+embedding = get_embedding(model_name="m3e-base")
 
 contents = df['content']
 
-content_embedding_large = torch.zeros(len(contents), 1024)
+content_embedding_large = torch.zeros(len(contents), 768)
 
-x = torch.zeros(1024)
+x = torch.zeros(768)
 
 for i in tqdm(range(len(contents))):
     x = torch.tensor(embedding.embed_query(contents[i]), dtype=float)
     content_embedding_large[i, :] = x
     i = i + 1
 
-with open("thucnews/t2v_large/pkl/content_embedding_large.pkl", "wb") as file:
+with open("thucnews/m3e_base/pkl/content_embedding_m3e_base.pkl", "wb") as file:
     pickle.dump(obj=content_embedding_large, file=file)
