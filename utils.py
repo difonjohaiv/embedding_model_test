@@ -26,3 +26,14 @@ def get_embedding(model_name="text2vec-large"):
 def get_simfunc():
     simfunc = CosineSimilarity(dim=0, eps=1e-6)
     return simfunc
+
+
+if __name__ == '__main__':
+    titles = ["苹果", "Apple", "华为"]
+    embedding = get_embedding(model_name="bge-large")
+    t_1 = torch.tensor(embedding.embed_query(titles[0]), dtype=float)
+    t_2 = torch.tensor(embedding.embed_query(titles[1]), dtype=float)
+    # score = get_simfunc(t_1, t_2)
+    tool = get_simfunc()
+    score = tool(t_1, t_2)
+    print(score)
