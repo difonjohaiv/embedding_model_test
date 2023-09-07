@@ -7,8 +7,6 @@ EMBEDDING_DEVICE = "cuda" if torch.cuda.is_available(
 model_kwargs = {'device': EMBEDDING_DEVICE}
 
 embedding_model_dict = {
-    "ernie-base": "models/ernie-3.0-base-zh",
-    "ernie-xbase": "models/ernie-3.0-xbase-zh",
     "text2vec-base": "models/text2vec-base-chinese",
     "text2vec-large": "models/text2vec-large-chinese",
     "m3e-base": "models/m3e-base",
